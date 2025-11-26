@@ -1,8 +1,10 @@
+import { DEATH_EXIT } from "../constants";
 import { Direction, ExitSymbol, ExitToken, GameState } from "../types";
+
+export { DEATH_EXIT };
 
 export const NUM_ROOMS = 54;
 export const EXITS_PER_ROOM = 4;
-export const DEATH_EXIT = 128;
 
 // 2D map data: [roomIndex][direction] => ExitToken
 // Each inner array corresponds to a room (1-based conceptually).

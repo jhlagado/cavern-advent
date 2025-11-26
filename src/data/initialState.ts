@@ -1,3 +1,9 @@
+import {
+  GRILL_START_ROOM,
+  START_ROOM,
+  DEST_BRIDGE_SAFE,
+  DEATH_EXIT,
+} from "../constants";
 import { GameState } from "../types";
 
 // P is 1-based and holds monster/object positions.
@@ -26,14 +32,14 @@ const initialPositions: number[] = [
   18,
   15,
   24,
-  38,
+  GRILL_START_ROOM,
 ];
 
 export function createInitialState(): GameState {
   return {
-    room: 1,
-    H: 11,
-    D: 128,
+    room: START_ROOM,
+    H: DEST_BRIDGE_SAFE,
+    D: DEATH_EXIT,
     W: 0,
     G: 0,
     T: 0,

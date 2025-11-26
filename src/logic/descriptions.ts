@@ -1,8 +1,16 @@
 import { describeEntity } from "../data/entities";
+import {
+  DEATH_EXIT,
+  ITEM_END,
+  ITEM_START,
+  MONSTER_END,
+  MONSTER_START,
+  OBJ_CANDLE,
+} from "../constants";
 import { GameState } from "../types";
 
 export function canSee(state: GameState): boolean {
-  const candleLocation = state.positions[21];
+  const candleLocation = state.positions[OBJ_CANDLE];
   const candleNearby = candleLocation === state.room || candleLocation === -1;
   return state.room < 18 || (state.candleLit && candleNearby);
 }
@@ -242,7 +250,7 @@ export function getLocationText(state: GameState): string[] {
     lines.push("You are deep in a dark cavern.");
   }
 
-  if ((a === 10 || a === 12) && state.H === 128) {
+  if ((a === 10 || a === 12) && state.H === DEATH_EXIT) {
     lines.push(
       "Two of the ropes have snapped under your weight. It's totally unfit to cross again."
     );
@@ -269,13 +277,13 @@ export function describeVisibleEntities(state: GameState): string[] {
   const objects: string[] = [];
   const monsters: string[] = [];
 
-  for (let i = 7; i <= 24; i += 1) {
+  for (let i = ITEM_START; i <= ITEM_END; i += 1) {
     if (state.positions[i] === here) {
       objects.push(describeEntity(i));
     }
   }
 
-  for (let i = 1; i <= 6; i += 1) {
+  for (let i = MONSTER_START; i <= MONSTER_END; i += 1) {
     if (state.positions[i] === here) {
       monsters.push(describeEntity(i));
     }

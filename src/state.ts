@@ -1,8 +1,21 @@
 import { createInitialState } from "./data/initialState";
 import { directionWords } from "./data/vocab";
-import { DEATH_EXIT, getExit } from "./data/map";
+import { getExit } from "./data/map";
 import { search } from "./helpers/search";
 import { normalizeInput } from "./helpers/text";
+import {
+  DEST_GRATE_OPEN,
+  DEST_STEPS,
+  OBJ_GRILL,
+  GRILL_START_ROOM,
+  DEATH_EXIT,
+  ITEM_START,
+  ITEM_END,
+  ROOM_BRIDGE_HALF,
+  ROOM_DRAWBRIDGE,
+  ROOM_LOKI_STATUE,
+  ROOM_WATERFALL,
+} from "./constants";
 import {
   canSee,
   describeVisibleEntities,
@@ -41,7 +54,7 @@ export function move(state: GameState, dir: Direction): string[] {
 
 export function listInventory(state: GameState): string[] {
   const carried: string[] = [];
-  for (let i = 7; i <= 24; i += 1) {
+  for (let i = ITEM_START; i <= ITEM_END; i += 1) {
     if (state.positions[i] === -1) {
       carried.push(describeEntity(i));
     }
@@ -89,20 +102,20 @@ export function handleInput(state: GameState, raw: string): GameResponse {
 }
 
 function applyDynamicFlags(state: GameState): void {
-  if (state.room === 11) {
-    state.H = 128;
+  if (state.room === ROOM_BRIDGE_HALF) {
+    state.H = DEATH_EXIT;
   }
-  if (state.room === 45) {
-    state.W = 43;
+  if (state.room === ROOM_WATERFALL) {
+    state.W = DEST_STEPS;
   }
-  if (state.room === 35) {
+  if (state.room === ROOM_LOKI_STATUE) {
     state.W = 0;
   }
-  if (state.positions[24] !== 38) {
-    state.G = 39;
+  if (state.positions[OBJ_GRILL] !== GRILL_START_ROOM) {
+    state.G = DEST_GRATE_OPEN;
   }
-  if (state.room === 49) {
-    state.D = 49;
+  if (state.room === ROOM_DRAWBRIDGE) {
+    state.D = ROOM_DRAWBRIDGE;
   }
 }
 
